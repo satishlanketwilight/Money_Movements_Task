@@ -1,21 +1,25 @@
-import datetime
-
-from flask import jsonify, make_response, render_template, request, url_for
+import flask_login
+from flask import make_response, render_template, request, url_for
 from flask.views import MethodView
-from flask_jwt_extended import create_access_token
-from flask_smorest import abort, Blueprint
+from flask_smorest import Blueprint
 from werkzeug.utils import redirect
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
 from app.models.users import UserModel
-
-from flask_login import login_user, logout_user, login_required, \
-    current_user
-from app.schemas.users import UserSchema, UserSingleOutputSchema, UserListOutputSchema
-from app.services.users import UserService
-from app.exceptions.users import UserObjectNotFound
+from app.logs import logger
+from flask_login import login_user, current_user
 
 auth_blp = Blueprint('auth', __name__, url_prefix='/auth',
                      description='All operations for an Authentication')
+
+
+@auth_blp.route('/logout')
+class Logout(MethodView):
+    @staticmethod
+    def get():
+        """ logout the user
+        """
+        flask_login.logout_user()
+        return make_response(render_template('index.html'))
 
 
 @auth_blp.route('/login')
@@ -28,26 +32,24 @@ class Login(MethodView):
         """
         if current_user.is_authenticated:
             return redirect(url_for('movements.MovementsList'))
-            
+
         return make_response(render_template('index.html', ))
 
     @staticmethod
-   
     def post():
         """ Login process with username and password params
         """
+        authenticated = False
         username = request.form['username']
         password = request.form['password']
         user = UserModel.query.filter_by(username=username).first()
         if user:
             authenticated = check_password_hash(user.password, password)
-            print(authenticated)
         if not authenticated:
+            logger.info(f"{username} attempted to login")
             return redirect(url_for('auth.Login'))
-        # print(user.user_id)
-        # print(user)
-        
-        login_user(user,remember=True)
+
+        login_user(user, remember=True)
         return redirect(url_for('movements.MovementsList'))
 
 

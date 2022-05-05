@@ -6,6 +6,7 @@ from app.schemas.movements import MoneyMovementSchema, MoneyMovementSingleOutput
 from app.services.movements import MoneyMovementsService
 from app.exceptions.movements import MovementObjectNotFound
 from flask_login import login_required
+
 movement_blp = Blueprint('movement', __name__, url_prefix='/movements',
                          description='All operations for a single money movement object')
 movements_blp = Blueprint('movements', __name__, url_prefix='/movements',
@@ -62,7 +63,6 @@ class Movement(MethodView):
         Delete money movement object.
         """
         try:
-            movement = movement_service.get_by_id(movement_id)
             movement_service.delete(movement_id)
             return {'message': 'Movement deleted successfully'}, 200
         except MovementObjectNotFound:
@@ -74,7 +74,6 @@ class MovementsList(MethodView):
     """Api view class for a list of Money Movement objects operations"""
 
     @staticmethod
-    
     @movements_blp.response(200, MoneyMovementListOutputSchema)
     @login_required
     def get():

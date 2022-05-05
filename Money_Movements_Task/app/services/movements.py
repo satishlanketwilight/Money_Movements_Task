@@ -11,19 +11,19 @@ class MoneyMovementsService:
         movement_list = MoneyMovementModel.query.all()
         if len(movement_list) == 0:
             items = [
-                    {
-                        "amount": "1000",
-                        "originator_person": "abc",
-                        "receiver_person": "xyz"
-                    },
-                    {
-                        "amount": "500",
-                        "originator_person": "asdf",
-                        "receiver_person": "xyz"
-                    }
-                ]
+                {
+                    "amount": "1000",
+                    "originator_person": "abc",
+                    "receiver_person": "xyz"
+                },
+                {
+                    "amount": "500",
+                    "originator_person": "asdf",
+                    "receiver_person": "xyz"
+                }
+            ]
             for i in items:
-                new_movement=MoneyMovementModel(**i)
+                new_movement = MoneyMovementModel(**i)
                 db.session.add(new_movement)
                 db.session.commit()
             movement_list = MoneyMovementModel.query.all()

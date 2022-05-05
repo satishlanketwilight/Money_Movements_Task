@@ -1,11 +1,7 @@
-import uuid
 import datetime
-
-from flask_login import UserMixin, login_manager
+from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy.dialects.postgresql import UUID
-
-from app.common import db,login
+from app.common import db, login
 
 
 class UserModel(UserMixin, db.Model):
@@ -13,7 +9,7 @@ class UserModel(UserMixin, db.Model):
     __tablename__ = 'users'
 
     # user_id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(length=80), unique=True)
     email = db.Column(db.String(length=100), unique=True)
     password = db.Column(db.String(200))
