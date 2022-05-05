@@ -5,7 +5,7 @@ from flask_smorest import abort, Blueprint
 from app.schemas.movements import MoneyMovementSchema, MoneyMovementSingleOutputSchema, MoneyMovementListOutputSchema
 from app.services.movements import MoneyMovementsService
 from app.exceptions.movements import MovementObjectNotFound
-
+from flask_login import login_required
 movement_blp = Blueprint('movement', __name__, url_prefix='/movements',
                          description='All operations for a single money movement object')
 movements_blp = Blueprint('movements', __name__, url_prefix='/movements',
@@ -74,7 +74,9 @@ class MovementsList(MethodView):
     """Api view class for a list of Money Movement objects operations"""
 
     @staticmethod
+    
     @movements_blp.response(200, MoneyMovementListOutputSchema)
+    @login_required
     def get():
         """Read all movements
 
@@ -88,6 +90,7 @@ class MovementsList(MethodView):
     @staticmethod
     @movements_blp.arguments(MoneyMovementSchema)
     @movements_blp.response(201, MoneyMovementSingleOutputSchema)
+    @login_required
     def post(movement_data):
         """Create a new movement
 

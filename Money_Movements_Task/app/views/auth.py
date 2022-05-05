@@ -7,7 +7,9 @@ from flask_smorest import abort, Blueprint
 from werkzeug.utils import redirect
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.models.users import UserModel
-from flask_login import login_user, current_user
+
+from flask_login import login_user, logout_user, login_required, \
+    current_user
 from app.schemas.users import UserSchema, UserSingleOutputSchema, UserListOutputSchema
 from app.services.users import UserService
 from app.exceptions.users import UserObjectNotFound
@@ -24,9 +26,13 @@ class Login(MethodView):
     def get():
         """ Render the Login Page.
         """
+        if current_user.is_authenticated:
+            return redirect(url_for('movements.MovementsList'))
+            
         return make_response(render_template('index.html', ))
 
     @staticmethod
+   
     def post():
         """ Login process with username and password params
         """
@@ -35,14 +41,14 @@ class Login(MethodView):
         user = UserModel.query.filter_by(username=username).first()
         if user:
             authenticated = check_password_hash(user.password, password)
+            print(authenticated)
         if not authenticated:
             return redirect(url_for('auth.Login'))
-        access_token = create_access_token(
-            identity=str(user.user_id),
-            expires_delta=datetime.timedelta(days=7))
-
-        # login_user(user)
-        return redirect(url_for('movements.MovementsList', name=user.username))
+        # print(user.user_id)
+        # print(user)
+        
+        login_user(user,remember=True)
+        return redirect(url_for('movements.MovementsList'))
 
 
 @auth_blp.route('/register')

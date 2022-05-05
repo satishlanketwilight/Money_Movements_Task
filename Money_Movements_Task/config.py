@@ -14,7 +14,7 @@ class Config:
 
     JWT_SECRET_KEY = environ.get('JWT_SECRET_KEY')
 
-
+    
     # DB config
     SQLALCHEMY_DATABASE_URI = environ.get("SQLALCHEMY_DATABASE_URI")
     SQLALCHEMY_ECHO = False

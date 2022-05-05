@@ -10,7 +10,7 @@ class MoneyMovementModel(db.Model):
     """Money Movement model class made for storing objects in database"""
     __tablename__ = 'movements'
 
-    movement_id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    movement_id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     modified_date = db.Column(db.Date, default=datetime.datetime.today)
     amount = db.Column(db.String(length=50))
     originator_person = db.Column(db.String(length=100))

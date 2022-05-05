@@ -5,14 +5,15 @@ from flask_login import UserMixin, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy.dialects.postgresql import UUID
 
-from app.common import db
+from app.common import db,login
 
 
 class UserModel(UserMixin, db.Model):
     """User model class made for storing objects in database"""
     __tablename__ = 'users'
 
-    user_id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    # user_id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    id = db.Column(db.Integer, primary_key=True,autoincrement=True)
     username = db.Column(db.String(length=80), unique=True)
     email = db.Column(db.String(length=100), unique=True)
     password = db.Column(db.String(200))
@@ -34,3 +35,6 @@ class UserModel(UserMixin, db.Model):
         return f'User : {self.email} : {self.username}'
 
 
+@login.user_loader
+def load_user(user):
+    return UserModel.query.get(user)
