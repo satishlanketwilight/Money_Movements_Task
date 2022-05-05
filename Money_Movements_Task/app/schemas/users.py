@@ -3,7 +3,7 @@ from marshmallow import fields, Schema
 
 class UserSchema(Schema):
     """User schema class made for serializing/deserializing database model"""
-    user_id = fields.UUID(data_key='userId', dump_only=True)
+    id = fields.UUID(data_key='id', dump_only=True)
     username = fields.String(data_key='username', required=True)
     email = fields.String(data_key='email', required=True)
     password = fields.String(data_key='password', required=True, load_only=True)
