@@ -1,0 +1,38 @@
+<body>
+    {% extends 'home.html' %} {% block content %}
+    <div class="h-10 bg-light p-4 container-fluid">
+        <h4 class="text-center h-4">Money Movements List</h4>  <h1>{{name}}</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Originated Person</th>
+                    <th scope="col">Received Person</th>
+                    <th scope="col">Modified Date</th>
+                    <th scope="col">Actions</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in data %}
+
+                <tr>
+                    <th scope="row ">{{loop.index}}</th>
+                    <td>{{i.amount}}</td>
+
+                    <td>{{i.originatorPerson}}</td>
+                    <td>{{i.receiverPerson}}</td>
+                    <td>{{i.modifiedDate}}</td>
+                    <td><a href="{{ url_for('movement.Movement',movement_id=i.movementId) }}">click for detail</a></td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+{% endblock %}
