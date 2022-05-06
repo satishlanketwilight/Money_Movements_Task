@@ -1,2 +1,0 @@
-class UserObjectNotFound(Exception):
-    pass
