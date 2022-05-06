@@ -24,6 +24,7 @@ class Movement(MethodView):
 
     @staticmethod
     @movement_blp.response(200, MoneyMovementSingleOutputSchema)
+    @login_required
     def get(movement_id):
         """Read a single movement
 
