@@ -4,10 +4,10 @@
         <h4 class="text-center ">Detail</h4>
         <div class="d-flex flex-column justify-content-center shadow-lg p-3 mb-5 bg-white rounded  align-items-center">
             <div>
-                <h4>Amount: {{data.amount}} </h4>
-                <h4>Originator Name: {{data.originatorPerson}} </h4>
-                <h4>Received Person:{{data.receiverPerson}} </h4>
-                <h4>Modified Date:{{data.modifiedDate}} </h4>
+                <h4>Amount: {{data.amount}}&nbsp;{{data.currency}} </h4>
+                <h4>Originator Name: {{data.originator_person}} </h4>
+                <h4>Received Person:{{data.receiver_person}} </h4>
+                <h4>Modified Date:{{data.modified_date}} </h4>
 
             </div>
             <form action="{{ url_for('movement.Movement',movement_id=data.movementId) }}" enctype="multipart/form-data" method="POST">

@@ -10,7 +10,7 @@ class UserSchema(Schema):
     date_joined = fields.Date(data_key='dateJoined', dump_only=True)
 
     class Meta:
-        fields = ('user_id', 'username', 'email', 'password', 'date_joined',)
+        fields = ('id', 'username', 'email', 'password', 'date_joined',)
 
 
 class UserSingleOutputSchema(Schema):

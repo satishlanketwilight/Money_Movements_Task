@@ -13,11 +13,13 @@ class MoneyMovementsService:
             items = [
                 {
                     "amount": "1000",
+                    "currency":"INR",
                     "originator_person": "abc",
                     "receiver_person": "xyz"
                 },
                 {
                     "amount": "500",
+                    "currency":"INR",
                     "originator_person": "asdf",
                     "receiver_person": "xyz"
                 }

@@ -1,4 +1,5 @@
 import datetime
+from locale import currency
 from app.common import db
 
 
@@ -9,6 +10,7 @@ class MoneyMovementModel(db.Model):
     movement_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     modified_date = db.Column(db.Date, default=datetime.datetime.today)
     amount = db.Column(db.String(length=50))
+    currency = db.Column(db.String(length=10))
     originator_person = db.Column(db.String(length=100))
     receiver_person = db.Column(db.String(length=100))
     note = db.Column(db.String(length=100), nullable=True)
